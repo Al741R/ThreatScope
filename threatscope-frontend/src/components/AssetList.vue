@@ -10,7 +10,7 @@ defineProps({
   },
 })
 
-const emit = defineEmits(['edit', 'delete'])
+const emit = defineEmits(['scan', 'edit', 'delete'])
 </script>
 
 <template>
@@ -19,6 +19,7 @@ const emit = defineEmits(['edit', 'delete'])
       <h2>Tracked Software Assets</h2>
       <span class="count-pill">{{ assets.length }} total</span>
     </div>
+
 
     <div v-if="loading" class="state-box">Loading asset watchlist...</div>
 
@@ -51,6 +52,9 @@ const emit = defineEmits(['edit', 'delete'])
               </span>
             </td>
             <td class="actions-cell">
+              <button type="button" class="btn btn-sm btn-primary" @click="emit('scan', asset)">
+                Scan
+              </button>
               <button type="button" class="btn btn-sm btn-secondary" @click="emit('edit', asset)">
                 Edit
               </button>

@@ -1,9 +1,11 @@
 <script setup>
 import { ref, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
 import { useAssetStore } from '@/stores/assetStore'
 import AssetForm from '@/components/AssetForm.vue'
 import AssetList from '@/components/AssetList.vue'
 
+const router = useRouter()
 const assetStore = useAssetStore()
 const editingAsset = ref(null)
 const feedbackMessage = ref('')
@@ -27,6 +29,10 @@ function handleSaved(message) {
 function handleEdit(asset) {
   editingAsset.value = { ...asset }
   window.scrollTo({ top: 0, behavior: 'smooth' })
+}
+
+function handleScan(asset) {
+  router.push({ name: 'dashboard', query: { scan: asset.id } })
 }
 
 async function handleDelete(asset) {
@@ -70,6 +76,7 @@ async function handleDelete(asset) {
     <AssetList
       :assets="assetStore.assets"
       :loading="assetStore.loading"
+      @scan="handleScan"
       @edit="handleEdit"
       @delete="handleDelete"
     />
